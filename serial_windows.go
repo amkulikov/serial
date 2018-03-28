@@ -150,11 +150,11 @@ func init() {
 	k32 := windows.NewLazySystemDLL("kernel32.dll")
 
 	nSetCommState = k32.NewProc("SetCommState")
-	nSetCommTimeouts = k32.NewProc( "SetCommTimeouts")
-	nSetCommMask = k32.NewProc( "SetCommMask")
-	nSetupComm = k32.NewProc( "SetupComm")
-	nGetOverlappedResult = k32.NewProc( "GetOverlappedResult")
-	nPurgeComm = k32.NewProc( "PurgeComm")
+	nSetCommTimeouts = k32.NewProc("SetCommTimeouts")
+	nSetCommMask = k32.NewProc("SetCommMask")
+	nSetupComm = k32.NewProc("SetupComm")
+	nGetOverlappedResult = k32.NewProc("GetOverlappedResult")
+	nPurgeComm = k32.NewProc("PurgeComm")
 }
 
 func setCommState(h windows.Handle, baud int, databits byte, parity Parity, stopbits StopBits) error {
@@ -280,7 +280,7 @@ func purgeComm(h windows.Handle) error {
 	r, _, err := nPurgeComm.Call(
 		uintptr(h),
 		PURGE_TXABORT|PURGE_RXABORT|PURGE_TXCLEAR|PURGE_RXCLEAR,
-		)
+	)
 	if r == 0 {
 		return err
 	}
@@ -304,7 +304,7 @@ func getOverlappedResult(h windows.Handle, overlapped *windows.Overlapped) (int,
 		uintptr(unsafe.Pointer(overlapped)),
 		uintptr(unsafe.Pointer(&n)),
 		1,
-		)
+	)
 	if r == 0 {
 		return n, err
 	}
